@@ -1,18 +1,19 @@
 ## UI-001 — Username and Password fields allow extremely large maximum input length
 
 **Priority:** Medium  
-**Type:** Validation
+**Type:** Validation/Input
 
 ---
 
 ### Description
-The **Username** and **Password** input fields on the login page allow an extremely large maximum length value (`2147483647`). Allowing such a large input size may cause performance issues or unexpected behavior when processing user input.
+The **Username** and **Password** input fields on the login page allow an extremely large maximum length value (`2147483647`). Allowing such a large input size may cause performance issues, potential memory issues.
 
 ---
 
 ### Environment
 **Application:** Paylocity Benefits Dashboard  
 **Browser:** Chrome  
+
 ---
 
 ### Steps to Reproduce
@@ -26,8 +27,10 @@ The **Username** and **Password** input fields on the login page allow an extrem
 
 ### Actual Result
 Both **Username** and **Password** input fields contain the following attribute:
+
 `maxlength="2147483647"`
-This allows extremely long input values.
+
+This allows extremely long input values without reasonable restriction.
 
 ---
 
@@ -35,6 +38,7 @@ This allows extremely long input values.
 Input fields should have reasonable validation limits based on typical authentication standards.
 
 Example recommended limits:
+
 - **Username:** 50 characters  
 - **Password:** 128 characters  
 
