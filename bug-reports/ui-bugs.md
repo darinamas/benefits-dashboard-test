@@ -1,7 +1,7 @@
 ## UI-001 — Username and Password fields allow extremely large maximum input length
 
 **Priority:** Medium  
-**Type:** Validation / Input Constraint  
+**Type:** Validation
 
 ---
 
@@ -12,10 +12,7 @@ The **Username** and **Password** input fields on the login page allow an extrem
 
 ### Environment
 **Application:** Paylocity Benefits Dashboard  
-**Page:** Login Page  
 **Browser:** Chrome  
-**URL:** https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/Login  
-
 ---
 
 ### Steps to Reproduce
@@ -28,7 +25,11 @@ The **Username** and **Password** input fields on the login page allow an extrem
 ---
 
 ### Actual Result
-Both **Username** and **Password** input fields contain the following attribute: maxlength="2147483647"
+Both **Username** and **Password** input fields contain the following attribute:
+`maxlength="2147483647"`
+This allows extremely long input values.
+
+---
 
 ### Expected Result
 Input fields should have reasonable validation limits based on typical authentication standards.
@@ -37,6 +38,8 @@ Example recommended limits:
 - **Username:** 50 characters  
 - **Password:** 128 characters  
 
-Screenshot: 
-![Username and Password lenght issue](bug-reports/screenshots/ui/username_password_lenght_issue.png)
+---
 
+### Screenshot
+
+![Preview](screenshots/ui/username_password_lenght_issue.png)
