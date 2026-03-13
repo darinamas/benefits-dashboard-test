@@ -38,5 +38,5 @@ Example recommended limits:
 - **Password:** 128 characters  
 
 Screenshot: 
-![Username and Password lenght issue](../screenshots/ui/username_password_lenght_issue.png)
+![Username and Password lenght issue](bug-reports/screenshots/ui/username_password_lenght_issue.png)
 
