@@ -588,7 +588,7 @@ https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/Login
 
 ### Screenshot
 
-![Preview](screenshots/ui/actions_missing_tooltips.png)
+![Preview](screenshots/ui/action_missing_tooltips.png)
 
 ## UI-015 — "Add Employee" button placed at the bottom of the dashboard
 
