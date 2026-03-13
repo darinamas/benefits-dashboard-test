@@ -1,3 +1,28 @@
+# Paylocity Benefits Dashboard — Bug Report
+
+## Summary
+
+| ID | Title | Priority | Type |
+|----|------|------|------|
+| UI-001 | Username and Password fields allow extremely large maximum input length | Medium | Validation |
+| UI-002 | Login with invalid credentials returns HTTP 405 | Medium | Error Handling |
+| UI-003 | Dashboard title displayed on login page | Medium | UI |
+| UI-004 | First Name and Last Name displayed in incorrect columns | Medium | UI |
+| UI-005 | Name fields allow special characters | Medium | Validation |
+| UI-006 | No error message displayed when adding employee fails | High | Validation |
+| UI-007 | Employee ID displayed as raw GUID | Medium | UI |
+| UI-008 | Table layout breaks with long names | Low | Layout |
+| UI-009 | Employee table has no default sorting | Medium | Usability |
+| UI-010 | Table columns cannot be sorted | Medium | Usability |
+| UI-011 | Employee table missing pagination | Medium | Performance |
+| UI-012 | Employee table missing filtering/search | Medium | Usability |
+| UI-013 | Edit Employee dialog title incorrect | Medium | UI |
+| UI-014 | Missing tooltips for action icons | Low | UI |
+| UI-015 | Add Employee button placed at bottom | Medium | UI |
+| UI-016 | Expired session not handled properly | High | Session Management |
+
+
+
 ## UI-001 — Username and Password fields allow extremely large maximum input length
 
 **Priority:** Medium  
