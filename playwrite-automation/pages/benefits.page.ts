@@ -18,6 +18,7 @@ export class BenefitsPage {
 readonly deleteButtons: Locator;
 readonly deleteModal: Locator;
 readonly deleteEmployeeButton: Locator;
+  updateButton: any;
 
   constructor(page: Page) {
     this.page = page;

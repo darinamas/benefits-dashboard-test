@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/test.fixture';
+import { test, expect } from '../../fixtures/ui.fixture';
 import { BenefitsPage } from '../../pages/benefits.page';
 
 test.describe('Delete Employee', () => {

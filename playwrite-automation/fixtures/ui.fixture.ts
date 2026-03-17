@@ -4,7 +4,7 @@ import { env } from '../config/env';
 
 export const test = base.extend({
 
-  page: async ({ page }, use) => {
+  page: async ({ page, context }, use) => {
 
     const loginPage = new LoginPage(page);
 
@@ -14,6 +14,8 @@ export const test = base.extend({
     await page.waitForURL(/Benefits/);
     
     await use(page);
+
+    await context.close();
 
   }
 
