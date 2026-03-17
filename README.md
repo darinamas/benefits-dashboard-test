@@ -49,3 +49,5 @@ npx playwright show-report
 ```
 
 ---
+<img width="2852" height="3866" alt="Playwright-Test-Report-03-17-2026_02_57_PM" src="https://github.com/user-attachments/assets/359e8db1-2f20-4b56-a607-882062bed1f8" />
+
