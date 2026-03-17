@@ -21,7 +21,29 @@ test-data/   Test data
 postman/     Postman collection
 
 ```
+## Key Features
 
+- **Page Object Model (POM)**  
+  UI interactions are encapsulated in page classes, improving readability, maintainability, and reusability of tests.
+
+- **Factory Pattern for Test Data**  
+  Test data is generated dynamically using factory classes, allowing consistent and reusable creation of test entities.
+
+- **Playwright Fixtures**  
+  Custom fixtures provide shared test resources such as API clients, authenticated pages, and prepared test data.
+
+- **API + UI Hybrid Testing**  
+  API calls are used to prepare test data and perform cleanup, while UI tests validate the user interface behavior.
+
+- **Test Data Isolation**  
+  Each test creates its own independent data, ensuring tests can run in parallel without affecting each other.
+
+- **Automatic Test Cleanup**  
+  Test data created during tests is automatically removed after execution, keeping the test environment clean.
+
+- **Modular Project Architecture**  
+  The project is organized into logical modules (pages, API clients, fixtures, test data, utils, tests), improving scalability and maintainability.
+  
 ## Setup ⚙️
 
 Install dependencies:
