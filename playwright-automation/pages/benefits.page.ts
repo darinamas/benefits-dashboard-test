@@ -14,16 +14,16 @@ export class BenefitsPage {
   readonly addButton: Locator;
   readonly employeesTable: Locator;
   readonly editButtons: Locator;
-  
-readonly deleteButtons: Locator;
-readonly deleteModal: Locator;
-readonly deleteEmployeeButton: Locator;
-  updateButton: any;
+
+  readonly deleteButtons: Locator;
+  readonly deleteModal: Locator;
+  readonly deleteEmployeeButton: Locator;
+  readonly updateButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
 
-    this.addEmployeeButton = page.locator('#add'); 
+    this.addEmployeeButton = page.locator('#add');
     this.modal = page.locator('#employeeModal');
 
     this.firstNameInput = page.locator('#firstName');
@@ -37,9 +37,9 @@ readonly deleteEmployeeButton: Locator;
     this.updateButton = page.locator('#updateEmployee');
 
     this.deleteButtons = page.locator('.fa-times');
-this.deleteModal = page.locator('#deleteModal');
-this.deleteEmployeeButton = page.locator('#deleteEmployee');
-    
+    this.deleteModal = page.locator('#deleteModal');
+    this.deleteEmployeeButton = page.locator('#deleteEmployee');
+
   }
 
   async goto() {
@@ -47,8 +47,8 @@ this.deleteEmployeeButton = page.locator('#deleteEmployee');
   }
 
   async waitForPageLoaded() {
-  await this.addEmployeeButton.waitFor({ state: 'visible' });
-}
+    await this.addEmployeeButton.waitFor({ state: 'visible' });
+  }
 
   async openAddEmployeeModal() {
     await this.addEmployeeButton.click();
@@ -62,12 +62,17 @@ this.deleteEmployeeButton = page.locator('#deleteEmployee');
   }
 
   async submitEmployee() {
+    await this.addButton.waitFor({ state: 'visible' });
     await this.addButton.click();
     await this.modal.waitFor({ state: 'hidden' });
   }
 
-    async openEditEmployee(index = 0) {
-    await this.editButtons.nth(index).click();
+  async openEditEmployee(firstName: string) {
+    const row = this.page.locator('#employeesTable tbody tr', {
+      has: this.page.locator(`td:nth-child(2):has-text("${firstName}")`)
+    });
+
+    await row.locator('.fa-edit').click();
     await this.modal.waitFor({ state: 'visible' });
   }
 
@@ -79,15 +84,19 @@ this.deleteEmployeeButton = page.locator('#deleteEmployee');
     await this.modal.waitFor({ state: 'hidden' });
   }
 
-  async openDeleteEmployee(index = 0) {
-  await this.deleteButtons.nth(index).click();
-  await this.deleteModal.waitFor({ state: 'visible' });
-}
+  async openDeleteEmployee(firstName: string) {
+    const row = this.page.locator('#employeesTable tbody tr', {
+      has: this.page.locator(`td:nth-child(2):has-text("${firstName}")`)
+    });
 
-async confirmDeleteEmployee() {
-  await this.deleteEmployeeButton.click();
-  await this.deleteModal.waitFor({ state: 'hidden' });
-}
+    await row.locator('.fa-times').click();
+    await this.deleteModal.waitFor({ state: 'visible' });
+  }
+
+  async confirmDeleteEmployee() {
+    await this.deleteEmployeeButton.click();
+    await this.deleteModal.waitFor({ state: 'hidden' });
+  }
 
   employeeRow(firstName: string) {
     return this.employeesTable.locator('tr', { hasText: firstName });
