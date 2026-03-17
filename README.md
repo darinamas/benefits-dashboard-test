@@ -19,7 +19,7 @@ pages/       Page Object Model
 fixtures/    Playwright fixtures
 test-data/   Test data
 postman/     Postman collection
-bug-reports/ Bug reports
+
 ```
 
 ## Setup ⚙️
