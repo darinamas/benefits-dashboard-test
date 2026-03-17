@@ -33,7 +33,7 @@ postman/     Postman collection
   Custom fixtures provide shared test resources such as API clients, authenticated pages, and prepared test data.
 
 - **API + UI Hybrid Testing**  
-  API calls are used to prepare test data and perform cleanup, while UI tests validate the user interface behavior.
+  API calls are used to prepare test data, create employee and perform cleanup, while UI tests validate the user interface behavior.
 
 - **Test Data Isolation**  
   Each test creates its own independent data, ensuring tests can run in parallel without affecting each other.
