@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/api.fixture';
+import { test, expect } from '../../fixtures/test.fixture';
 import { EmployeeFactory } from '../../test-data/employee.factory';
 
 test('employee lifecycle API test', async ({ api }) => {

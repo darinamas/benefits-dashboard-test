@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/ui.fixture';
+import { test, expect } from '../../fixtures/test.fixture';
 import { BenefitsPage } from '../../pages/benefits.page';
 import { EmployeeFactory } from '../../test-data/employee.factory';
 
@@ -8,10 +8,6 @@ test.describe('Add Employee', () => {
 
     const benefitsPage = new BenefitsPage(page);
     const employee = EmployeeFactory.createEmployee();
-
-   await test.step('Open Benefits page', async () => {
-      await benefitsPage.goto();
-    });
 
     await test.step('Open Add Employee modal', async () => {
       await benefitsPage.openAddEmployeeModal();
