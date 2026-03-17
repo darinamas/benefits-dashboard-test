@@ -1,3 +1,33 @@
+# Paylocity Benefits Dashboard — UI Bug Report
+
+## Summary
+
+| ID | Title | Priority | Type |
+|----|------|------|------|
+| UI-001 | Username and Password fields allow extremely large maximum input length | Medium | Validation |
+| UI-002 | Login with invalid credentials returns HTTP 405 | Medium | Error Handling |
+| UI-003 | Dashboard title displayed on login page | Medium | UI |
+| UI-004 | First Name and Last Name displayed in incorrect columns | Medium | UI |
+| UI-005 | Name fields allow special characters | Medium | Validation |
+| UI-006 | No error message displayed when adding employee fails | High | Validation |
+| UI-007 | Employee ID displayed as raw GUID | Medium | UI |
+| UI-008 | Table layout breaks with long names | Low | Layout |
+| UI-009 | Employee table has no default sorting | Medium | Usability |
+| UI-010 | Table columns cannot be sorted | Medium | Usability |
+| UI-011 | Employee table missing pagination | Medium | Performance |
+| UI-012 | Employee table missing filtering/search | Medium | Usability |
+| UI-013 | Edit Employee dialog title incorrect | Medium | UI |
+| UI-014 | Missing tooltips for action icons | Low | UI |
+| UI-015 | Add Employee button placed at bottom | Medium | UI |
+| UI-016 | Expired session not handled properly | High | Session Management |
+| API-001 | Incorrect status code returned for invalid payload in POST /api/employees | High | API |
+| API-002 | Inconsistent employee update endpoint: missing PUT /employees/{id} | Minor | API |
+| API-003 | [DELETE /api/employees] returns 200 OK instead of 204 No Content | Minor | API |
+| API-004 | Salary cannot be set via POST; always 52000 (hardcoded/default) | Major | API |
+| API-005 | GET /employees/{id} returns 200 OK with empty body for non-existing employee | Major | API |
+| API-006 | Wrong status code for invalid format GUID in GET /employees/{id} | High | API |
+
+
 ## UI-001 — Username and Password fields allow extremely large maximum input length
 
 **Priority:** Medium  
@@ -588,7 +618,7 @@ https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/Login
 
 ### Screenshot
 
-![Preview](screenshots/ui/actions_missing_tooltips.png)
+![Preview](screenshots/ui/action_missing_tooltips.png)
 
 ## UI-015 — "Add Employee" button placed at the bottom of the dashboard
 
@@ -668,3 +698,265 @@ When the user session expires, the application does not notify the user or redir
 - User is notified and redirected to the login page.
 
 
+
+
+## API-001 — Incorrect status code returned for invalid payload in POST /api/employees
+
+**Priority:** High  
+**Type:** Employee Update API Design 
+
+---
+
+### Description
+When sending an invalid payload to the **POST /api/employees** endpoint, the API returns **405 Method Not Allowed** instead of a validation error.  
+This behavior is incorrect because the request method itself is valid; only the request payload is invalid.
+
+The API should validate the request body and return an appropriate client error indicating that the request data is invalid.
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce
+1. Send a request to the endpoint: POST /api/employees
+2. Use the following request payload:
+
+```json
+{
+  "firstName": "",
+  "lastName": "",
+  "dependants": null
+}
+```
+3. Send the request and observe the response.
+
+
+## Actual Result
+
+- API returns **405 Method Not Allowed**
+- The response does **not** contain a meaningful validation error message explaining the issue with the payload.
+
+## Expected Result
+
+- API should **validate the request payload**
+- The endpoint should return **400 Bad Request** for invalid input
+- The response should contain a clear validation message indicating which fields are invalid
+
+### Example Response
+
+```json
+{
+  "error": "Invalid request payload",
+  "details": "firstName, lastName and dependants are required fields"
+}
+```
+
+![Preview](screenshots/api/api-not-allowed.png)
+
+
+## API-002 — Inconsistent employee update endpoint: missing PUT /employees/{id}
+
+**Severity / Priority:** Minor  
+**Component:** Employee Update API Design  
+
+---
+
+### Description
+The **employee update endpoint** is inconsistent with REST best practices.  
+
+Currently:  
+- `GET /employees/{id}` exists  
+- `DELETE /employees/{id}` exists  
+- `PUT /employees` exists, but requires the employee ID in the request body instead of the URL  
+
+A standard RESTful design would provide a **PUT /employees/{id}** endpoint for updating a specific employee resource.
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce / Observe
+1. Inspect existing endpoints:  
+   - `GET /employees/{id}`  
+   - `DELETE /employees/{id}`  
+2. Attempt to locate `PUT /employees/{id}` → endpoint does not exist  
+3. Observe that updates are performed via `PUT /employees` with the `id` included in the request body  
+
+---
+
+### Actual Result
+- Requires the `id` to be included in the request body  
+- Lacks symmetry with other endpoints and deviates from standard REST practices  
+
+---
+
+### Expected Result
+- Provide a `PUT /employees/{id}` endpoint  
+
+![Preview](screenshots/api/missing-put-id.png)
+
+
+## API-003 — [DELETE /api/employees] returns 200 OK instead of 204 No Content
+
+**Priority:** Minor
+**Component:** Employee Update API Design  
+
+---
+
+### Description
+The **DELETE /api/employees** endpoint currently returns a **200 OK** status after successfully deleting an employee record.  
+
+According to common REST conventions, a successful deletion should return **204 No Content**.
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce
+1. Send a `DELETE` request for an existing employee record via `/api/employees`  
+2. Observe the returned HTTP status code  
+
+---
+
+### Actual Result
+- **200 OK** is returned after successful deletion  
+
+---
+
+### Expected Result
+- **204 No Content** should be returned for a successful deletion  
+
+---
+
+![Preview](screenshots/api/delete-200.png)
+
+
+## API-004 — Salary cannot be set via POST; always 52000 (hardcoded/default)
+
+**Priority:** Major  
+**Component:** Employee Create API  
+
+---
+
+### Description
+The **POST /api/employees** endpoint ignores the `Salary` field in the request body.  
+
+Regardless of the value provided by the client, the persisted salary is always **52000**. 
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce
+1. Send a `POST /api/employees` request with a `Salary` value different from 52000.  
+2. Retrieve the created employee or inspect the persisted data.  
+3. Observe that the `Salary` remains **52000**, regardless of the value sent.  
+
+---
+
+### Actual Result
+- Salary is always **52000**  
+
+---
+
+### Expected Result
+- Salary should be settable on employee creation.
+
+---
+
+![Preview](screenshots/api/salary-over.png)
+
+
+## API-005 — GET /employees/{id} returns 200 OK with empty body for non-existing employee
+
+**Priority:** Major  
+**Component:** Employee Retrieval API  
+
+---
+
+### Description
+The **GET /employees/{id}** endpoint returns **200 OK** with an empty response body when the requested employee does not exist.  
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce
+1. Call `GET /employees/{id}` with an ID that does not exist.  
+2. Observe the response status and body.  
+
+---
+
+### Actual Result
+- **200 OK** is returned  
+- Response body is empty  
+
+---
+
+### Expected Result
+- **404 Not Found** should be returned for a non-existing employee  
+- Response should include a meaningful error payload indicating the employee was not found  
+
+---
+
+![Preview](screenshots/api/get-employee-not-found.png)
+
+
+## API-006 — Wrong status code for invalid format GUID in GET /employees/{id}
+
+**Priority:** High  
+**Component:** Employee Retrieval API  
+
+---
+
+### Description
+The **GET /employees/{id}** endpoint returns a **500 Internal Server Error** when the provided employee ID is an invalid GUID format.  
+
+According to API best practices, the server should validate the request format and return a **400 Bad Request** for invalid IDs rather than failing with a server error.
+
+---
+
+### Environment
+**Application:** Paylocity Benefits API  
+**Tool:** Postman  
+
+---
+
+### Steps to Reproduce
+1. Send a GET request to:  
+   GET /employees/{invalid-id} 
+2. Observe the returned HTTP status code  
+
+---
+
+### Actual Result
+- **500 Internal Server Error** is returned  
+- No meaningful error message provided  
+
+---
+
+### Expected Result
+- **400 Bad Request** should be returned for invalid GUID formats  
+- Response should include a descriptive message indicating the invalid format  
+
+![Preview](screenshots/api/get-invalid-guid.png)
