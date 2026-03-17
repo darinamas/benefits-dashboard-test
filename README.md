@@ -31,7 +31,10 @@ postman/     Postman collection
 
 - **Playwright Fixtures**  
   Custom fixtures provide shared test resources such as API clients, authenticated pages, and prepared test data.
-
+  
+- **API-driven Test Data Setup**  
+  UI tests create test data (e.g., employees) via API before execution, ensuring faster, more reliable test preparation without relying on UI workflows.
+  
 - **API + UI Hybrid Testing**  
   API calls are used to prepare test data, create employee and perform cleanup, while UI tests validate the user interface behavior.
 
