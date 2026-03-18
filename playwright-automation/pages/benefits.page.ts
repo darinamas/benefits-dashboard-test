@@ -48,9 +48,11 @@ export class BenefitsPage {
 
   async waitForPageLoaded() {
     await this.addEmployeeButton.waitFor({ state: 'visible' });
+    await this.page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible' });
   }
 
   async openAddEmployeeModal() {
+    await this.page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible' });
     await this.addEmployeeButton.click();
     await this.modal.waitFor({ state: 'visible' });
   }
